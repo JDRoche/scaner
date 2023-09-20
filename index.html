@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="html5-qrcode.min.js"></script>
+</head>
+
+<body>
+    <button onclick="getPermissions()">Leer cedula</button>
+    <div id="camera-video"></div>
+    <script>
+        let video = document.getElementById("camera-video")
+
+        const formatsToSupport = [
+            Html5QrcodeSupportedFormats.PDF_417,
+        ];
+        let scanner = new Html5QrcodeScanner('camera-video', {
+            qrbox: {
+                width: 400,
+                height: 150
+            },
+            formatsToSupport: formatsToSupport,
+            fps: 20
+        });
+
+        function getPermissions() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    console.log(stream)
+                    video.hidden = false;
+                    scanner.render(succes, error)
+                    // video.srcObject = stream
+                }).catch((error) => {
+                    console.log(error)
+                })
+        }
+
+        function succes(result) {
+            console.log(result)
+            scanner.clear();
+        }
+
+        function error(error) {
+            console.log(error);
+
+        }
+    </script>
+</body>
+
+</html>
