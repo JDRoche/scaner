@@ -10,6 +10,7 @@
 <body>
     <button onclick="getPermissions()">Leer cedula</button>
     <div id="camera-video"></div>
+    <div id="datos"></div>
     <script>
         let video = document.getElementById("camera-video")
 
@@ -39,6 +40,8 @@
 
         function succes(result) {
             console.log(result)
+            const datoselement = document.getElementById("datos")
+            datoselement.innerHTML = result
             scanner.clear();
         }
 
