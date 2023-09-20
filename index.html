@@ -27,15 +27,7 @@
         });
 
         function getPermissions() {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then((stream) => {
-                    console.log(stream)
-                    video.hidden = false;
-                    scanner.render(succes, error)
-                    // video.srcObject = stream
-                }).catch((error) => {
-                    console.log(error)
-                })
+            scanner.render(succes, error)
         }
 
         function succes(result) {
