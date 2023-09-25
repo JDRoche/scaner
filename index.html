@@ -96,17 +96,18 @@
 
 
 
-                scanner.onUniqueRead = (txt, result) => {
+                scanner.onUniqueRead = (txt, resultArray) => {
                     let textelement = document.getElementById("datos");
                     let firtsNameElement = document.getElementById("primer_nombre");
                     let secondNameElement = document.getElementById("segundo_nombre");
                     let surnameElement = document.getElementById("primer_apellido");
                     let secondSurnameElemnt = document.getElementById("segundo_apellido");
                     let decoder = new TextDecoder("utf-8");
-                    firtsNameElement.value = decoder.decode(result.barcodeBytes.slice(104,127));
-                    secondNameElement.value = decoder.decode(result.barcodeBytes.slice(127,150));
-                    surnameElement.value = decoder.decode(result.barcodeBytes.slice(58,80));
-                    secondSurnameElemnt.value = decoder.decode(result.barcodeBytes.slice(81,104));
+                    let result = new Uint8Array(resultArray.barcodeBytes);
+                    firtsNameElement.value = decoder.decode(result.slice(104,127));
+                    secondNameElement.value = decoder.decode(result.slice(127,150));
+                    surnameElement.value = decoder.decode(result.slice(58,80));
+                    secondSurnameElemnt.value = decoder.decode(result.slice(81,104));
 
                     textelement.innerHTML = "Código leido";
                     console.log(txt);
