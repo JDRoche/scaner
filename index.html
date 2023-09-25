@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode/dist/dbr.js"></script>
+    <script src="/dynamsoft-barcode-reader-js-9.6.30/dist/dbr.js"></script>
 </head>
 
 <body>
@@ -12,38 +12,70 @@
     <div id="camera-video"></div>
     <div id="datos"></div>
     <script>
+        // specify a license, you can visit https://www.dynamsoft.com/customer/license/trialLicense?utm_source=intro&product=dbr&package=js to get your own trial license good for 30 days.
+        Dynamsoft.DBR.BarcodeReader.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMjQ0MDA2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjI0NDAwNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOjIwNzA4ODU5NDN9";
+
         function getPermissions() {
 
-            // specify a license, you can visit https://www.dynamsoft.com/customer/license/trialLicense?utm_source=intro&product=dbr&package=js to get your own trial license good for 30 days.
-            Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9';
+            
             (async () => {
-                let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
 
+                let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
                 // Obtains the current runtime settings of DBR.
                 let rs = await scanner.getRuntimeSettings();
-                // Sets the preprocessing modes
+
+                scanner.maxCvsSideLength = 4096;
+                rs.scaleDownThreshold = 4096;
+                // Sets the scale-up mode.
+                rs.scaleUpModes[0] = Dynamsoft.DBR.EnumScaleUpMode.SUM_LINEAR_INTERPOLATION;
+
+
+                
+
+                // modos para preprocesar imagen 
                 rs.furtherModes.imagePreprocessingModes[0] = Dynamsoft.DBR.EnumImagePreprocessingMode.IPM_GRAY_EQUALIZE;
                 rs.furtherModes.imagePreprocessingModes[1] = Dynamsoft.DBR.EnumImagePreprocessingMode.IPM_GRAY_SMOOTH;
                 rs.furtherModes.imagePreprocessingModes[2] = Dynamsoft.DBR.EnumImagePreprocessingMode.IPM_SHARPEN_SMOOTH;
                 rs.furtherModes.imagePreprocessingModes[3] = Dynamsoft.DBR.EnumImagePreprocessingMode.IPM_MORPHOLOGY;
+
+                // Sets the text filter mode. cuando hay texto alrededor
+                //rs.furtherModes.textFilterModes[0] = Dynamsoft.DBR.EnumTextFilterMode.TFM_GENERAL_CONTOUR;
+
+                // detectar codigos en imagenes que tienen texturas
+                //rs.furtherModes.textureDetectionModes[0] = Dynamsoft.DBR.EnumTextureDetectionMode.TDM_GENERAL_WIDTH_CONCENTRATION;
+
+                //utilizar un umbral local para binarizar
+                rs.binarizationModes[0] = Dynamsoft.DBR.EnumBinarizationMode.BM_LOCAL_BLOCK;
+
+                // Sets the barcode format(s).
+                rs.barcodeFormatIds = Dynamsoft.DBR.EnumBarcodeFormat.PDF_417;
+
                 // Updates the settings.
+                //await scanner.updateRuntimeSettings(rs);
+
+                await scanner.updateRuntimeSettings("dense");
+               // await scanner.setResolution(3840, 2160);
+
+                //scanner.setModeArgument("TextureDetectionModes", 0, "Sensitivity", "5");
+
 
                 // Fine-tunes some arguments of these modes
-                scanner.setModeArgument("imagePreprocessingModes", 0, "Sensitivity", "9");
-                scanner.setModeArgument("imagePreprocessingModes", 1, "SmoothBlockSizeX", "10");
-                scanner.setModeArgument("imagePreprocessingModes", 1, "SmoothBlockSizeY", "10");
-                scanner.setModeArgument("imagePreprocessingModes", 2, "SharpenBlockSizeX", "5");
-                scanner.setModeArgument("imagePreprocessingModes", 2, "SharpenBlockSizeY", "5");
-                scanner.setModeArgument("imagePreprocessingModes", 3, "MorphOperation", "Close");
-                scanner.setModeArgument("imagePreprocessingModes", 3, "MorphOperationKernelSizeX", "7");
-                scanner.setModeArgument("imagePreprocessingModes", 3, "MorphOperationKernelSizeY", "7");
+                // scanner.setModeArgument("imagePreprocessingModes", 0, "Sensitivity", "9");
+                // scanner.setModeArgument("imagePreprocessingModes", 1, "SmoothBlockSizeX", "10");
+                // scanner.setModeArgument("imagePreprocessingModes", 1, "SmoothBlockSizeY", "10");
+                // scanner.setModeArgument("imagePreprocessingModes", 2, "SharpenBlockSizeX", "5");
+                // scanner.setModeArgument("imagePreprocessingModes", 2, "SharpenBlockSizeY", "5");
+                // scanner.setModeArgument("imagePreprocessingModes", 3, "MorphOperation", "Close");
+                // scanner.setModeArgument("imagePreprocessingModes", 3, "MorphOperationKernelSizeX", "7");
+                // scanner.setModeArgument("imagePreprocessingModes", 3, "MorphOperationKernelSizeY", "7");
 
-                scanner.maxCvsSideLength = 4096;
-                // Defines settings for reading dense barcodes in a template.
-                let jsonString = "{\"ImageParameter\":{\"BarcodeComplementModes\":[\"BCM_SKIP\"],\"DeblurModes\":[{\"Mode\":\"DM_SHARPENING\"},{\"Mode\":\"DM_GRAY_EQUALIZATION\"}],\"ExpectedBarcodesCount\":1,\"LocalizationModes\":[\"LM_CONNECTED_BLOCKS\"],\"ScaleUpModes\":[\"SUM_LINEAR_INTERPOLATION(0,4,6)\"],\"MaxAlgorithmThreadCount\":1,\"Name\":\"high-density-qr-tpl\",\"ScaleDownThreshold\":10000,\"Timeout\":5000},\"Version\":\"3.0\"}";
-                // Configures the BarcodeScanner object with the settings.
-                await scanner.initRuntimeSettingsWithString(jsonString);
-                await scanner.updateRuntimeSettings(rs);
+                // Fine-tunes some arguments of the first mode in `binarizationModes`
+                // scanner.setModeArgument("binarizationModes", 0, "BlockSizeX", "0");
+                // scanner.setModeArgument("binarizationModes", 0, "BlockSizeY", "0");
+                // scanner.setModeArgument("binarizationModes", 0, "EnableFillBinaryVacancy", "1");
+                // scanner.setModeArgument("binarizationModes", 0, "ThresholdCompensation", "10");
+
+
 
 
                 scanner.onUniqueRead = (txt, result) => {
