@@ -103,7 +103,7 @@
                     let surnameElement = document.getElementById("primer_apellido");
                     let secondSurnameElemnt = document.getElementById("segundo_apellido");
 
-                    firtsNameElement.value = txt.slice(104,127).trim();
+                    firtsNameElement.value = result.barcodeBytes.slice(104,127).toString();
                     textelement.innerHTML = txt;
                     console.log(txt);
                     console.log(result);
