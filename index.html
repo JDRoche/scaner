@@ -11,6 +11,24 @@
     <button onclick="getPermissions()">Leer cedula</button>
     <div id="camera-video"></div>
     <div id="datos"></div>
+    <form action="#">
+        <label for="primer_nombre">
+            <span>Primr Nombre:</span>
+            <input type="text" name="primer_nombre" id="primer_nombre">
+        </label>
+        <label for="segundo_nombre">
+            <span>Segundo Nombre:</span>
+            <input type="text" name="segundo_nombre" id="segundo_nombre">
+        </label>
+        <label for="primer_apellido">
+            <span>Primer Apellido:</span>
+            <input type="text" name="primer_apellido" id="primer_apellido">
+        </label>
+        <label for="segundo_apellido">
+            <span>Segundo Apellido:</span>
+            <input type="text" name="segundo_apellido" id="segundo_apellido"> 
+        </label>
+    </form>
     <script>
         // specify a license, you can visit https://www.dynamsoft.com/customer/license/trialLicense?utm_source=intro&product=dbr&package=js to get your own trial license good for 30 days.
         Dynamsoft.DBR.BarcodeReader.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMjQ0MDA2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjI0NDAwNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOjIwNzA4ODU5NDN9";
@@ -80,9 +98,17 @@
 
                 scanner.onUniqueRead = (txt, result) => {
                     let textelement = document.getElementById("datos");
+                    let firtsNameElement = document.getElementById("primer_nombre");
+                    let secondNameElement = document.getElementById("segundo_nombre");
+                    let surnameElement = document.getElementById("primer_apellido");
+                    let secondSurnameElemnt = document.getElementById("segundo_apellido");
+
+                    firtsNameElement.value = txt.slice(104,127).trim();
                     textelement.innerHTML = txt;
                     console.log(txt);
                     console.log(result);
+                    scanner.close();
+                    scanner.destroyContext();
                 };
                 await scanner.show();
             })();
