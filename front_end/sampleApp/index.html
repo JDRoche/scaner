@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv='cache-control' content='no-cache'>
+		<meta http-equiv='expires' content='0'>
+		<meta http-equiv='pragma' content='no-cache'>
+		<meta id="viewport" name="viewport" content="initial-scale=0.75, user-scalable=0, minimum-scale=0.75, maximum-scale=0.75" />
+		<!--viewport above is set to not be scalable by the user although not all browsers adhere to that-->
+			
+			<title>cmbWeb sample app</title>
+			
+		<link rel="stylesheet" type="text/css" href="sample-app-style.css">
+		<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	</head>
+	<body style="background: #323232">
+	<script type="text/javascript">
+	var startScanning = function (){ 
+		mwbScanner.startScanning(function(res){
+				//show result in console
+				console.log(res);
+				
+				//show configureButton as scanning has finished
+				let configureButton = document.getElementById("configureScanner");
+				configureButton.style.visibility = "visible";
+			}, 
+			window.xywh_value[0],
+			window.xywh_value[1],
+			window.xywh_value[2],
+			window.xywh_value[3]);
+		
+		//hide configureButton as you can't configure during scanning
+		let configureButton = document.getElementById("configureScanner"); configureButton.style.visibility = "hidden";
+	};
+	
+	var closeScanner = function (){
+		mwbScanner.closeScanner();
+	};
+	
+	var showControls = false;
+	var configureScanner = function (){
+		let startButton = document.getElementById("startScanner");
+		let closeButton = document.getElementById("closeScanner");
+		let configureButton = document.getElementById("configureScanner");
+		let configureText = document.getElementById("configureText");
+		
+		showControls = !showControls;
+		
+		if (showControls)
+		{
+			startButton.style.visibility = "hidden";
+			closeButton.style.visibility = "hidden";
+			configureText.textContent = "Go back";
+			
+			show_or_hide(showControls);
+		}
+		else
+		{
+			startButton.style.visibility = "visible";
+			closeButton.style.visibility = "visible";
+			configureText.textContent = "Configure Scanner";
+			
+			show_or_hide(showControls);
+		}
+	};
+	</script>
+	
+	<div id="startScanner" onclick="startScanning()">
+		<svg viewBox="0 0 32 32">
+			<use xlink:href="icon-sprite.svg#play"></use>
+		</svg>Start Scanning
+	</div>
+	
+	<div id="closeScanner" onclick="closeScanner()">
+		<svg viewBox="0 0 32 32">
+			<use xlink:href="icon-sprite.svg#close"></use>
+		</svg>Close Scanner
+	</div>
+	
+	<div id="configureScanner" onclick="configureScanner()">
+		<svg viewBox="0 0 32 32">
+			<use xlink:href="icon-sprite.svg#options"></use>
+		</svg><div id="configureText">Configure Scanner</div>
+	</div>
+		
+		<!--its advisable to version the js scripts as browsers can hold the cache and not use the new changes-->
+		<script type="text/javascript" src="sample_app_UI.js"></script>
+		<script type="text/javascript" src="../MWBScanner_wa.js"></script>
+		<script type="text/javascript" src="MWBConfig_wa.js"></script>
+		<script type="text/javascript" src="../sdk_modular.js"></script>
+		<script type="text/javascript" src="../main.js"></script>
+		<script async type="text/javascript" src="../index.js"></script>
+	</body>
+</html>

@@ -1,0 +1,260 @@
+﻿div#startScanner {position: fixed;left: 8%;top:3%;width: 20%;height: 50px;border-radius: 3px;background: #272523; border:1px solid #111; color: #fff; font-size: 0.875em; box-shadow: 0px 11px 22px 0px rgba(0, 0, 0, 0.3);display: flex;justify-content: center;align-items: center;padding: 5px 10px;transition-duration: .1s;}
+div#startScanner svg {fill:#DE690C;height: 20px;margin-right: 8px;}
+div#startScanner:hover {cursor: pointer;background: #111;}
+
+div#closeScanner {position: fixed;left: 38%;top:3%;width: 20%;height: 50px;border-radius: 3px;background: #272523; border:1px solid #111; color: #fff; font-size: 0.875em; box-shadow: 0px 11px 22px 0px rgba(0, 0, 0, 0.3);display: flex;justify-content: center;align-items: center;padding: 5px 10px;transition-duration: .1s;}
+div#closeScanner svg {fill:#DE690C;height: 20px;margin-right: 8px;}
+div#closeScanner:hover {cursor: pointer;background: #111;}
+
+div#configureScanner {position: fixed;left: 68%;top:3%;width: 20%;height: 50px;border-radius: 3px;background: #272523; border:1px solid #111; color: #fff; font-size: 0.875em; box-shadow: 0px 11px 22px 0px rgba(0, 0, 0, 0.3);display: flex;justify-content: center;align-items: center;padding: 5px 10px;transition-duration: .1s;z-index:100;}
+div#configureScanner svg {fill:#DE690C;height: 20px;margin-right: 8px;}
+div#configureScanner:hover {cursor: pointer;background: #111;}
+
+/*start of labels*/
+span[id$="_text1"] {
+	color: #f5f5f5;
+}
+
+span[id$="_text2"] {
+	color: #8f8f8f;
+}
+
+/*start of toggle buttons*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #595959;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #323232;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  /*background-color: #2196F3;*/
+  background-color: #DE690C;
+  /*background-color: #dc833c;*/
+}
+
+input:focus + .slider {
+  /*box-shadow: 0 0 1px #2196F3;*/
+  box-shadow: 0 0 1px #DE690C;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/*end of toggle buttons*/
+
+
+/*start of google fonts*/
+body {
+    font-family: 'Roboto'; font-size: 22px;
+}
+/*end of google fonts*/
+
+
+/*start of custom select*/
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  /*font-family: Calibri;*/
+  font-size: 16px; /*16px*/
+  font-weight: bold;
+}
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+  /*background-color: #272523;*/
+  background-color: #DE690C;
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  /*color: #ffffff;*/
+  color: #323232;
+  /*padding: 8px 16px;*/
+  padding: 8px 32px 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  /*background-color: DodgerBlue;*/
+  background-color: #DE690C;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+.select-items div:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/*end of custom select*/
+
+
+/*start of custom checkboxes*/
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+	color: #8f8f8f;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #4a4a4a;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #595959;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    /*background-color: #2196F3;*/
+    background-color: #DE690C;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+/*end of custom checkboxes*/
+
+
+/*start of custom range slider*/
+.slidecontainer {
+    width: 80%;
+}
+
+.slider_range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #4a4a4a;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider_range:hover {
+    opacity: 1;
+}
+
+.slider_range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #DE690C; /*#4CAF50*/
+    cursor: pointer;
+}
+
+.slider_range::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #DE690C;
+    cursor: pointer;
+}
+/*end of custom range slider*/
